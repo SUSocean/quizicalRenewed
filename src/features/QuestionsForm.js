@@ -17,8 +17,8 @@ const QuestionsForm = () => {
     const [type, setType] = useState('')
     return (
         <div className="form-wrapper">
-            <h1 className="form-title">Quizzical</h1>
-            <h2 className="form-header">Select your quiz options</h2>
+            <h2 className="form-title">Quizzical</h2>
+            <h3 className="form-header">Select your quiz options</h3>
             <span className="form-helper">click to change</span>
             <div className="form-options">
 
@@ -51,8 +51,8 @@ const QuestionsForm = () => {
                     </span>
                     <span className="form-category-user-choise">
                         {
-                            type == 'boolean' ? 'True / False'
-                                : type == 'multiple' ? 'Multiple Choice'
+                            type === 'boolean' ? 'True / False'
+                                : type === 'multiple' ? 'Multiple Choice'
                                     : 'Any type'
                         }
                     </span>
@@ -63,7 +63,7 @@ const QuestionsForm = () => {
             >
                 Start Quiz
             </button>
-            {selectedInput == 'number' &&
+            {selectedInput === 'number' &&
 
                 <div className="form-user-input-wrapper">
                     <p className="form-user-input-info">{numberQuestions}</p>
@@ -82,7 +82,7 @@ const QuestionsForm = () => {
                         onClick={(e) => setSelectedInput(null)}>close</button>
                 </div>}
 
-            {selectedInput == 'category' &&
+            {selectedInput === 'category' &&
 
                 <div className="form-user-input-wrapper">
                     <p className="form-user-input-info">{categoryDecoder(category)}</p>
@@ -119,7 +119,7 @@ const QuestionsForm = () => {
                         onClick={(e) => setSelectedInput(null)}>close</button>
                 </div>}
 
-            {selectedInput == 'difficulty' &&
+            {selectedInput === 'difficulty' &&
 
                 <div className="form-user-input-wrapper">
                     <p className="form-user-input-info">{capitalizeFirstLetter(difficulty)}</p>
@@ -139,12 +139,12 @@ const QuestionsForm = () => {
                         onClick={(e) => setSelectedInput(null)}>close</button>
                 </div>}
 
-            {selectedInput == 'type' &&
+            {selectedInput === 'type' &&
 
                 <div className="form-user-input-wrapper">
                     <p className="form-user-input-info">{
-                        type == 'boolean' ? 'True / False'
-                            : type == 'multiple' ? 'Multiple Choice'
+                        type === 'boolean' ? 'True / False'
+                            : type === 'multiple' ? 'Multiple Choice'
                                 : 'Any type'
                     }</p>
                     <select

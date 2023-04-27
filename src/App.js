@@ -11,8 +11,9 @@ function App() {
   const gameStage = useSelector(getGameStage)
   return (
     <>
-      {gameStage == 'options' && <QuestionsForm />}
-      {gameStage == 'questions' && <QuestionsList key={nanoid()} />}
+      <h1 className='visually-hidden'>Quizical, solve the quizzes</h1>
+      {gameStage === 'options' && <QuestionsForm />}
+      {(gameStage === 'questions' || gameStage === 'results') && <QuestionsList key={nanoid()} />}
     </>
   );
 }

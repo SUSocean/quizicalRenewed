@@ -7,7 +7,8 @@ const initialState = {
     status: 'idle',
     questions: [],
     error: null,
-    gameStage: 'options' // 'options' 'questions' 'answers'
+    gameStage: 'options', // 'options' 'questions' 'results'
+    numCorrect: 0
 }
 
 export const fetchQuestions = createAsyncThunk(
@@ -27,9 +28,9 @@ export const questionsSlice = createSlice({
         },
         answerSelected: (state, action) => {
             const { answerId, questionId } = action.payload
-            let currentQuestion = state.questions.filter(question => question.id == questionId)[0]
+            let currentQuestion = state.questions.filter(question => question.id === questionId)[0]
             let newAnswers = currentQuestion.answers.map(answer => {
-                if (answer.answerId == answerId) {
+                if (answer.answerId === answerId) {
                     return {
                         ...answer,
                         isSelected: !answer.isSelected
@@ -39,7 +40,7 @@ export const questionsSlice = createSlice({
                 }
             })
             state.questions = state.questions.map(question => {
-                if (question.id == questionId) {
+                if (question.id === questionId) {
                     return {
                         ...question,
                         answers: newAnswers
@@ -48,6 +49,9 @@ export const questionsSlice = createSlice({
                     return { ...question }
                 }
             })
+        },
+        numCorrectUpdated: (state, action) => {
+            state.numCorrect = action.payload
         }
     },
     extraReducers: (builder) => {
@@ -57,19 +61,20 @@ export const questionsSlice = createSlice({
             })
             .addCase(fetchQuestions.fulfilled, (state, action) => {
                 state.status = 'fulfilled'
+                state.numCorrect = 0
                 const data = action.payload.results
 
                 state.questions = data.map(entity => {
                     let answers = entity.incorrect_answers.map(answer => (
                         {
-                            answer: answer,
+                            answer: decodeString(answer),
                             isCorrect: false,
                             isSelected: false,
                             answerId: nanoid()
                         }))
                     answers.push(
                         {
-                            answer: entity.correct_answer,
+                            answer: decodeString(entity.correct_answer),
                             isCorrect: true,
                             isSelected: false,
                             answerId: nanoid()
@@ -89,9 +94,10 @@ export const questionsSlice = createSlice({
     }
 })
 
-export const { gameStageChanged, answerSelected } = questionsSlice.actions
+export const { gameStageChanged, answerSelected, numCorrectUpdated } = questionsSlice.actions
 
 export const getQuestions = (state) => state.questions.questions
 export const getStatus = (state) => state.questions.status
 export const getError = (state) => state.questions.error
 export const getGameStage = (state) => state.questions.gameStage
+export const getNumCorrect = (state) => state.questions.numCorrect
