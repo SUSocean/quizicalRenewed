@@ -1,3 +1,1 @@
-work in progress
-
-updating existing site
+Fun and interactive platform where users can select various categories and preferences to generate random questions for them to answer. Once the user selects their desired options, the website generates a series of thought-provoking questions that range from general knowledge to pop culture and more. The website is designed to be user-friendly and offers a great experience for anyone looking to have a bit of fun while learning something new.
